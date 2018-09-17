@@ -62,22 +62,22 @@ Route::get('/di', 'ClientController@di');
     
 });
 
-Route::get('/', 'ContentsController@home');
+Route::get('/', 'ContentsController@home')->name('home');
 
-Route::get('/clients', 'ClientController@index');
+Route::get('/clients', 'ClientController@index')->name('clients');
 
 
 //get&post new&create
-Route::get('/clients/new', 'ClientController@newClient');
-Route::post('/clients/new', 'ClientController@create');
+Route::get('/clients/new', 'ClientController@newClient')->name('new_client');
+Route::post('/clients/new', 'ClientController@create')->name('create_client');
 
 //get&post Client show&modify
-Route::get('/clients/{client_id}', 'ClientController@show');
-Route::post('/clients/{client_id}', 'ClientController@modify');
+Route::get('/clients/{client_id}', 'ClientController@show')->name('show_client');
+Route::post('/clients/{client_id}', 'ClientController@modify')->name('modify_client');
 
 
 //get&post reservations
-Route::get('/reservations/{client_id}', 'RoomsController@checkAvailableRooms');
+Route::get('/reservations/{client_id}', 'RoomsController@checkAvailableRooms')->name('check_room');
 Route::post('/reservations/{client_id}', 'RoomsController@checkAvailableRooms');
 
 //get&post book
