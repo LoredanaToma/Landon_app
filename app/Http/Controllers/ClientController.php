@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Title as Title;
+use App\Client as Client;  //importam modelul Client
 
 
 class ClientController extends Controller
 {
   
-    public function __construct(Title $titles){
+    public function __construct(Title $titles, Client $client){
       
       $this->titles = $titles->all();
+      $this->client = $client;
       
   }
   
@@ -26,42 +28,15 @@ class ClientController extends Controller
        $data=[];
        
        
-       $obj = new \stdClass;
-       $obj->id = 1;
-       $obj->title = 'ms';
-       $obj->name = 'Loredana';
-       $obj->last_name = 'Toma';
-       $obj->email = 'tomalore@domain.com';
-        
-       $data['clients'][]=$obj;
        
-       
- 
-       $obj = new \stdClass;
-       $obj->id = 2;
-       $obj->title = 'mr';
-       $obj->name = 'Ion';
-       $obj->last_name = 'Dolanescu';
-       $obj->email = 'dolanescu-ion@another-domain.com';
-       
-       $data['clients'][]=$obj;
-       
-       
-       $obj = new \stdClass;
-       $obj->id = 2;
-       $obj->title = 'mr';
-       $obj->name = 'Ionut';
-       $obj->last_name = 'Dolhan';
-       $obj->email = 'dolhan-ion@another-domain.com';
-       
-       $data['clients'][]=$obj;
+       $data['clients']= $this->client->all();
        
         return view('client/index', $data); 
        
   }
   
   
-   public function newClient( Request $request){
+   public function newClient( Request $request, Client $client){
     
        $data = [];
        
@@ -74,10 +49,6 @@ class ClientController extends Controller
        $data['state']= $request->input('state');
        $data['email']= $request->input('email');
      
-       
-       
-       $data['titles'] = $this->titles;
-       $data['modify']='0';
        
        
        if( $request->isMethod('post') )
@@ -101,9 +72,13 @@ class ClientController extends Controller
                 ]   
             );
           
+           $client->insert($data);
+           
            return redirect('clients');
        }
        
+           $data['titles'] = $this->titles;
+           $data['modify']='0';
        
         return view('client/form', $data); 
        
@@ -121,6 +96,15 @@ class ClientController extends Controller
        $data = [];
        $data['titles'] = $this->titles;
        $data['modify']='1';
+       $client_data=$this->client->find($client_id);
+       $data['name'] = $client_data->name;
+       $data['last_name'] = $client_data->last_name;
+       $data['title'] = $client_data->title;
+       $data['address'] = $client_data->address;
+       $data['zip_code'] = $client_data->zip_code;
+       $data['city'] = $client_data->city;
+       $data['state'] = $client_data->state;
+       $data['email'] = $client_data->email;
        
          return view('client/form', $data);
        
