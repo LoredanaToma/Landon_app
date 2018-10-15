@@ -81,4 +81,4 @@ Route::get('/reservations/{client_id}', 'RoomsController@checkAvailableRooms')->
 Route::post('/reservations/{client_id}', 'RoomsController@checkAvailableRooms');
 
 //get&post book
-Route::get('/book/room/{client_id}/{room_id}/{date_in}/{date_out}', 'ReservationsController@bookRoom');
+Route::get('/book/room/{client_id}/{room_id}/{date_in}/{date_out}', 'ReservationsController@bookRoom')->name('book_room');
