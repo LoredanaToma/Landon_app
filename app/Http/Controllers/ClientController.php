@@ -135,7 +135,7 @@ class ClientController extends Controller
                    
                 $request, 
                 [
-                    'name'=> 'required|min:5',
+                    'name'=> 'required|min:3',
                     'last_name'=> 'required',
                     'address'=> 'required',
                     'zip_code'=> 'required',
@@ -167,6 +167,5 @@ class ClientController extends Controller
         return view('client/form', $data); 
        
   }
-  
-  
+    
 }
